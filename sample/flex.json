@@ -1,0 +1,15 @@
+{
+  "test": {
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "hello, world"
+        }
+      ]
+    }
+  }
+}
