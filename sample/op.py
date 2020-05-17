@@ -88,6 +88,18 @@ def receive_message(bot, event):
         if message_text == 'てきすと':
             bot.send_text_message(reply_token, 'テキスト')
 
+        elif message_text == 'いろんな':
+            message_list = [
+                bot.create_text_message('いろんな'),
+                bot.create_text_message('メッセージ'),
+                bot.create_image_message('https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png'),
+                bot.create_video_message(
+                    'https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4',
+                    'https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png'
+                )
+            ]
+            bot.send_message(reply_token, message_list)
+
         elif message_text == 'りっち':
             rich_menu = bot.create_rich_menu_object(get_rich('test'))
             rich_menu_id = bot.create_rich_menu(rich_menu, 'test.png', 'png')
@@ -99,7 +111,7 @@ def receive_message(bot, event):
             bot.send_text_message(reply_token, str(event), quick_reply=quick_reply)
 
         elif message_text == 'ふくすう':
-            bot.send_text_message(reply_token, 'ふ', 'く', 'す', 'う', quick_reply=quick_reply)
+            bot.send_text_message(reply_token, 'ふ', 'く', 'す', 'う')
 
         elif message_text == 'がぞう':
             bot.send_image_message(
