@@ -10,10 +10,7 @@ class Tracer:
         self.client = client
         self.debug = debug
 
-    def trace(self, app, request):
-        signature = request.headers['X-Line-Signature']
-        body = request.get_data(as_text=True)
-
+    def trace(self, body, signature):
         try:
             events = self.client.parser.parse(body, signature)
         except InvalidSignatureError:
@@ -21,7 +18,7 @@ class Tracer:
 
         for event in events:
             if self.debug:
-                app.logger.debug(event)
+                print(event)
             self.__execute(event)
 
     def __execute(self, event):
