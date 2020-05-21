@@ -46,7 +46,9 @@ tracer.add_event('message', receive_message)
 
 @app.route("/", methods=['POST'])
 def hello():
-    tracer.trace(app, request)
+    signature = request.headers['X-Line-Signature']
+    body = request.get_data(as_text=True)
+    tracer.trace(body, signature)
     return 'OK'
 
 if __name__ == '__main__':
