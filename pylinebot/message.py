@@ -1,3 +1,4 @@
+# local
 from linebot.models import (
     TextSendMessage,
     ImageSendMessage,
@@ -11,83 +12,88 @@ from linebot.models import (
     QuickReplyButton,
     RichMenu
 )
+from .exception import SetQuickReplyError
 
 class Message:
 
     """
         Message Object
     """
-    def create_text_message(self, text, quick_reply=None, sender=None):
+
+    quick_reply = None
+
+    def create_text_message(self, text):
         return TextSendMessage(
             text=text,
-            quick_reply=quick_reply
+            quick_reply=self.quick_reply
         )
 
-    def create_image_message(self, image_url, quick_reply=None, sender=None):
+    def create_image_message(self, image_url):
         return ImageSendMessage(
             original_content_url=image_url,
             preview_image_url=image_url,
-            quick_reply=quick_reply
+            quick_reply=self.quick_reply
         )
 
-    def create_video_message(self, content_url, preview_url, quick_reply=None, sender=None):
+    def create_video_message(self, video_data):
         return VideoSendMessage(
-            original_content_url=content_url,
-            preview_image_url=preview_url,
-            quick_reply=quick_reply
+            original_content_url=video_data['content_url'],
+            preview_image_url=video_data['preview_url'],
+            quick_reply=self.quick_reply
         )
 
-    def create_audio_message(self, content_url, duration, quick_reply=None, sender=None):
+    def create_audio_message(self, audio_data):
         return AudioSendMessage(
-            original_content_url=content_url,
-            duration=duration,
-            quick_reply=quick_reply
+            original_content_url=audio_data['content_url'],
+            duration=audio_data['duration'],
+            quick_reply=self.quick_reply
         )
 
-    def create_location_message(self, title, address, latitude, longitude, quick_reply=None, sender=None):
+    def create_location_message(self, location_data):
         return LocationSendMessage(
-            title=title,
-            address=address,
-            latitude=latitude,
-            longitude=longitude,
-            quick_reply=quick_reply
+            title=location_data['title'],
+            address=location_data['address'],
+            latitude=location_data['latitude'],
+            longitude=location_data['longitude'],
+            quick_reply=self.quick_reply
         )
 
-    def create_sticker_message(self, package_id, sticker_id, quick_reply=None, sender=None):
+    def create_sticker_message(self, sticker_data):
         return StickerSendMessage(
-            package_id=package_id,
-            sticker_id=sticker_id,
-            quick_reply=quick_reply
+            package_id=sticker_data['package_id'],
+            sticker_id=sticker_data['sticker_id'],
+            quick_reply=self.quick_reply
         )
 
-    def create_flex_message(self, content, alt_text, quick_reply=None, sender=None):
+    def create_flex_message(self, flex_data):
         return FlexSendMessage(
-            alt_text=alt_text,
-            contents=content,
-            quick_reply=quick_reply
+            alt_text=flex_data['alt_text'],
+            contents=flex_data['content'],
+            quick_reply=self.quick_reply
         )
 
     """
         Other
     """
-    def create_quick_reply(self, action_list, img_url_list=[]):
+    def set_quick_reply(self, action_list, img_url_list=[]):
         if not img_url_list:
             img_url_list = [None] * len(action_list)
         elif len(action_list) != len(img_url_list):
-            raise Exception('[pylinebot: create_quick_reply] action, img_url list length is different.')
+            raise SetQuickReplyError(
+                'action and img_url list length is different.'
+            )
         item_list = [
             QuickReplyButton(
-                image_url=img_url,
-                action=action
+                image_url=img_url, action=action
             ) for action, img_url in zip(action_list, img_url_list)
         ]
-        return QuickReply(items=item_list)
+        self.quick_reply = QuickReply(items=item_list)
 
-    def create_rich_menu_object(self, content):
+    def create_rich_menu_object(self, rich_content):
         return RichMenu(
-            size=content['size'],
-            selected=content['selected'],
-            name=content['name'],
-            chat_bar_text=content['chatBarText'],
-            areas=content['areas']
+            size=rich_content['size'],
+            selected=rich_content['selected'],
+            name=rich_content['name'],
+            chat_bar_text=rich_content['chatBarText'],
+            areas=rich_content['areas']
         )

@@ -1,113 +1,168 @@
+# standard
+import os
+
+# local
 from .message import Message
 from .function import Func
+from .exception import (
+    MessageLimitError,
+    DifferentTypeError
+)
+
+def check(func):
+    def message_count(*args):
+        messages = args[1]
+        if len(messages) > 5:
+            raise MessageLimitError(
+                'You can send up to 5 messages at once.'
+            )
+    return message_count
 
 class Service(Message, Func):
 
-    def __init__(self):
-        Func.__init__(self)
+    """
+        Bot Service
+    """
+
+    def set_reply_token(self, reply_token):
+        self.reply_token = reply_token
+
+    def save_content_from_message_id(self, message_id, file_name=None):
+        """
+            save content (image, video, auido) from message_id
+        """
+        message_content = self.get_message_content(message_id)
+        if file_name is None:
+            type_list = message_content.content_type.split('/')
+            file_type = type_list[0]
+            file_extension = type_list[1]
+            os.makedirs(f'content/{file_type}')
+            file_name = f'content/{file_type}/{message_id}.{file_extension}'
+        content = self.get_message_content(message_id).content
+        with open(file_name, 'wb') as content_file:
+            content_file.write(content)
+
+    def save_image_from_rich_id(self, rich_id, file_name=None):
+        """
+            save rich image from rich_id
+        """
+        rich_content = self.get_rich_menu_image(rich_id)
+        if file_name is None:
+            type_list = rich_content.content_type.split('/')
+            file_type = type_list[0]
+            file_extension = type_list[1]
+            os.makedirs(f'rich_menu/{file_type}')
+            file_name = f'rich_menu/{file_type}/{rich_id}.{file_extension}'
+        content = self.get_rich_menu_image(rich_id).content
+        with open(file_name, 'wb') as content_file:
+            content_file.write(content)
 
     """
         Send Message
     """
-    def reply_message(self, reply_token, message_list):
+    @check
+    def reply_message(self, messages):
         self.client.reply_message(
-            reply_token=reply_token,
-            messages=message_list
+            reply_token=self.reply_token,
+            messages=messages
         )
 
-    def push_message(self, to, message_list):
-        self.client.push_message(
-            to=to,
-            messages=message_list
-        )
-
-    def broadcast(self, message_list):
-        self.client.broadcast(message_list)
-
-    def narrowcast(self, message_list):
-        self.client.narrowcast(message_list)
-
-    def multicast(self, to, message_list):
-        self.client.multicast(to, message_list)
-
-    def send_message(self, reply_token_or_to=None, message_list=[], send_type='reply'):
-        if not message_list:
-            raise Exception('[pylinebot: send_message] message count 0 is invalid.')
-        elif len(message_list) > 5:
-            raise Exception('[pylinebot: send_message] message count over 5 is invalid.')
-        elif send_type == 'reply':
-            self.reply_message(reply_token_or_to, message_list)
-        elif send_type == 'push':
-            self.push_message(reply_token_or_to, message_list)
-        elif send_type == 'broadcast':
-            self.broadcast(message_list)
-        elif send_type == 'narrowcast':
-            self.narrowcast(message_list)
-        elif send_type == 'multicast':
-            self.multicast(reply_token_or_to, message_list)
-
-    def send_text_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [self.create_text_message(text, quick_reply) for text in args]
-        self.send_message(reply_token_or_to, message_list, send_type)
-
-    def send_image_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [self.create_image_message(url, quick_reply) for url in args]
-        self.send_message(reply_token_or_to, message_list, send_type)
-
-    def send_video_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [
-            self.create_video_message(
-                video_data['content_url'],
-                video_data['preview_url'],
-                quick_reply
-            ) for video_data in args
+    def reply_text_message(self, *args):
+        messages = [
+            self.create_text_message(text) for text in args
         ]
-        self.send_message(reply_token_or_to, message_list, send_type)
+        self.reply_message(messages)
 
-    def send_audio_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [
-            self.create_audio_message(
-                audio_data['content_url'],
-                audio_data['duration'],
-                quick_reply
-            ) for audio_data in args
+    def reply_image_message(self, *args):
+        messages = [
+            self.create_image_message(img_url) for img_url in args
         ]
-        self.send_message(reply_token_or_to, message_list, send_type)
+        self.reply_message(messages)
 
-    def send_location_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [
-            self.create_location_message(
-                location_data['title'],
-                location_data['address'],
-                location_data['latitude'],
-                location_data['longitude'],
-                quick_reply
-            ) for location_data in args
+    def reply_video_message(self, *args):
+        messages = [
+            self.create_video_message(video_data) for video_data in args
         ]
-        self.send_message(reply_token_or_to, message_list, send_type)
+        self.reply_message(messages)
 
-    def send_sticker_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [
-            self.create_sticker_message(
-                sticker_data['package_id'],
-                sticker_data['sticker_id'],
-                quick_reply
-            ) for sticker_data in args
+    def reply_audio_message(self, *args):
+        messages = [
+            self.create_audio_message(audio_data) for audio_data in args
         ]
-        self.send_message(reply_token_or_to, message_list, send_type)
+        self.reply_message(messages)
 
-    def send_flex_message(self, reply_token_or_to, *args, quick_reply=None, sender=None, send_type='reply'):
-        message_list = [
-            self.create_flex_message(
-                content['flex'],
-                content['alt_text'],
-                quick_reply=quick_reply
-            ) for content in args
+    def reply_location_message(self, *args):
+        messages = [
+            self.create_location_message(lct_data) for lct_data in args
         ]
-        self.send_message(reply_token_or_to, message_list, send_type)
+        self.reply_message(messages)
+
+    def reply_sticker_message(self, *args):
+        messages = [
+            self.create_sticker_message(stk_data) for stk_data in args
+        ]
+        self.reply_message(messages)
+
+    def reply_flex_message(self, *args):
+        messages = [
+            self.create_flex_message(flex_data) for flex_data in args
+        ]
+        self.reply_message(messages)
+
+    @check
+    def push_message(self, to, messages):
+        self.client.push_message(to, messages)
+
+    @check
+    def broadcast(self, messages):
+        self.client.broadcast(messages)
+
+    @check
+    def narrowcast(self, messages):
+        self.client.narrowcast(messages)
+
+    @check
+    def multicast(self, to, messages):
+        self.client.multicast(to, messages)
 
     """
-        Get message or status
+        Get function
+    """
+    def get_profile(self, user_id):
+        return self.client.get_profile(user_id)
+
+    def get_profile_from_group(self, group_id, user_id):
+        return self.client.get_group_member_profile(group_id, user_id)
+
+    def get_profile_from_room(self, room_id, user_id):
+        return self.client.get_room_member_profile(room_id, user_id)
+
+    def get_group_member_ids(self, group_id, start=None):
+        """
+            Verified account only
+        """
+        return self.client.get_group_member_ids(group_id, start=start)
+
+    def get_room_member_ids(self, room_id, start=None):
+        """
+            Verified account only
+        """
+        return self.client.get_room_member_ids(room_id, start=start)
+
+    def get_message_content(self, message_id):
+        return self.client.get_message_content(message_id)
+
+    """
+        Action function
+    """
+    def leave_group(self, group_id):
+        return self.client.leave_group(group_id)
+
+    def leave_room(self, room_id):
+        return self.client.leave_room(room_id)
+
+    """
+        Get message status
     """
     def get_progress_status_narrowcast(self, request_id):
         return self.client.get_progress_status_narrowcast(request_id)
@@ -125,38 +180,6 @@ class Service(Message, Func):
         return self.client.get_message_delivery_multicast(date)
 
     """
-        Get function
-    """
-    def get_profile(self, user_id):
-        return self.client.get_profile(user_id)
-
-    def get_profile_from_group(self, group_id, user_id):
-        return self.client.get_group_member_profile(group_id, user_id)
-
-    def get_profile_from_room(self, room_id, user_id):
-        return self.client.get_room_member_profile(room_id, user_id)
-
-    def get_group_member_ids(self, group_id, start=None):
-        # Verified account only
-        return self.client.get_group_member_ids(group_id, start=start)
-
-    def get_room_member_ids(self, room_id, start=None):
-        # Verified account only
-        return self.client.get_room_member_ids(room_id, start=start)
-
-    def get_message_content(self, message_id):
-        return self.client.get_message_content(message_id)
-
-    """
-        Action function
-    """
-    def leave_group(self, group_id):
-        return self.client.leave_group(group_id)
-
-    def leave_room(self, room_id):
-        return self.client.leave_room(room_id)
-
-    """
         Rich menu
     """
     def get_rich_menu(self, rich_menu_id):
@@ -167,9 +190,13 @@ class Service(Message, Func):
 
     def create_rich_menu(self, rich_menu, file_name, file_format='jpeg'):
         if file_format not in ['jpeg', 'png']:
-            raise Exception('[pylinebot: create_rich_menu] image file format is jpeg or png.')
+            raise DifferentTypeError(
+                'image file format is jpeg or png.'
+            )
         rich_menu_id = self.client.create_rich_menu(rich_menu)
-        content = self.img_file_to_bytes(file_name, format=file_format, rich=True)
+        content = self.img_file_to_bytes(
+            file_name, format=file_format, rich=True
+        )
         self.client.set_rich_menu_image(
             rich_menu_id,
             f'image/{file_format}',
@@ -184,7 +211,9 @@ class Service(Message, Func):
         return self.client.link_rich_menu_to_user(user_id, rich_menu_id)
 
     def link_rich_menu_to_multi_user(self, user_id_list, rich_menu_id):
-        return self.client.link_rich_menu_to_users(user_id_list, rich_menu_id)
+        return self.client.link_rich_menu_to_users(
+            user_id_list, rich_menu_id
+        )
 
     def unlink_rich_menu_from_user(self, user_id):
         return self.client.unlink_rich_menu_from_user(user_id)
