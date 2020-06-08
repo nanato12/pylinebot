@@ -11,7 +11,7 @@ setup(
     name='pylinebot',
     packages=['pylinebot'],
 
-    version='1.0.1',
+    version='1.0.2',
 
     license='Apache License 2.0',
 
