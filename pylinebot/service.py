@@ -16,6 +16,8 @@ def check(func):
             raise MessageLimitError(
                 'You can send up to 5 messages at once.'
             )
+        else:
+            func(*args)
     return message_count
 
 class Service(Message, Func):
