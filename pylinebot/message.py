@@ -7,7 +7,6 @@ from linebot.models import (
     LocationSendMessage,
     StickerSendMessage,
     FlexSendMessage,
-    FlexContainer,
     QuickReply,
     QuickReplyButton,
     RichMenu,
