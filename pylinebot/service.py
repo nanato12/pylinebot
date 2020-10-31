@@ -4,26 +4,24 @@ import os
 # local
 from .message import Message
 from .function import Func
-from .exception import (
-    MessageLimitError,
-    DifferentTypeError
-)
+from .exception import MessageLimitError, DifferentTypeError
+
 
 def check(func):
     def message_count(*args):
         messages = args[1]
         if len(messages) > 5:
-            raise MessageLimitError(
-                'You can send up to 5 messages at once.'
-            )
+            raise MessageLimitError("You can send up to 5 messages at once.")
         else:
             func(*args)
+
     return message_count
+
 
 class Service(Message, Func):
 
     """
-        Bot Service
+    Bot Service
     """
 
     def set_reply_token(self, reply_token):
@@ -31,84 +29,68 @@ class Service(Message, Func):
 
     def save_content_from_message_id(self, message_id, file_name=None):
         """
-            save content (image, video, auido) from message_id
+        save content (image, video, auido) from message_id
         """
         message_content = self.get_message_content(message_id)
         if file_name is None:
-            type_list = message_content.content_type.split('/')
+            type_list = message_content.content_type.split("/")
             file_type = type_list[0]
             file_extension = type_list[1]
-            os.makedirs(f'content/{file_type}')
-            file_name = f'content/{file_type}/{message_id}.{file_extension}'
+            os.makedirs(f"content/{file_type}")
+            file_name = f"content/{file_type}/{message_id}.{file_extension}"
         content = self.get_message_content(message_id).content
-        with open(file_name, 'wb') as content_file:
+        with open(file_name, "wb") as content_file:
             content_file.write(content)
 
     def save_image_from_rich_id(self, rich_id, file_name=None):
         """
-            save rich image from rich_id
+        save rich image from rich_id
         """
         rich_content = self.get_rich_menu_image(rich_id)
         if file_name is None:
-            type_list = rich_content.content_type.split('/')
+            type_list = rich_content.content_type.split("/")
             file_type = type_list[0]
             file_extension = type_list[1]
-            os.makedirs(f'rich_menu/{file_type}')
-            file_name = f'rich_menu/{file_type}/{rich_id}.{file_extension}'
+            os.makedirs(f"rich_menu/{file_type}")
+            file_name = f"rich_menu/{file_type}/{rich_id}.{file_extension}"
         content = self.get_rich_menu_image(rich_id).content
-        with open(file_name, 'wb') as content_file:
+        with open(file_name, "wb") as content_file:
             content_file.write(content)
 
     """
         Send Message
     """
+
     @check
     def reply_message(self, messages):
-        self.client.reply_message(
-            reply_token=self.reply_token,
-            messages=messages
-        )
+        self.client.reply_message(reply_token=self.reply_token, messages=messages)
 
     def reply_text_message(self, *args):
-        messages = [
-            self.create_text_message(text) for text in args
-        ]
+        messages = [self.create_text_message(text) for text in args]
         self.reply_message(messages)
 
     def reply_image_message(self, *args):
-        messages = [
-            self.create_image_message(img_url) for img_url in args
-        ]
+        messages = [self.create_image_message(img_url) for img_url in args]
         self.reply_message(messages)
 
     def reply_video_message(self, *args):
-        messages = [
-            self.create_video_message(video_data) for video_data in args
-        ]
+        messages = [self.create_video_message(video_data) for video_data in args]
         self.reply_message(messages)
 
     def reply_audio_message(self, *args):
-        messages = [
-            self.create_audio_message(audio_data) for audio_data in args
-        ]
+        messages = [self.create_audio_message(audio_data) for audio_data in args]
         self.reply_message(messages)
 
     def reply_location_message(self, *args):
-        messages = [
-            self.create_location_message(lct_data) for lct_data in args
-        ]
+        messages = [self.create_location_message(lct_data) for lct_data in args]
         self.reply_message(messages)
 
     def reply_sticker_message(self, *args):
-        messages = [
-            self.create_sticker_message(stk_data) for stk_data in args
-        ]
+        messages = [self.create_sticker_message(stk_data) for stk_data in args]
         self.reply_message(messages)
 
     def reply_flex_message(self, *args):
-        messages = [
-            self.create_flex_message(flex_data) for flex_data in args
-        ]
+        messages = [self.create_flex_message(flex_data) for flex_data in args]
         self.reply_message(messages)
 
     @check
@@ -130,6 +112,7 @@ class Service(Message, Func):
     """
         Get function
     """
+
     def get_profile(self, user_id):
         return self.client.get_profile(user_id)
 
@@ -141,13 +124,13 @@ class Service(Message, Func):
 
     def get_group_member_ids(self, group_id, start=None):
         """
-            Verified account only
+        Verified account only
         """
         return self.client.get_group_member_ids(group_id, start=start)
 
     def get_room_member_ids(self, room_id, start=None):
         """
-            Verified account only
+        Verified account only
         """
         return self.client.get_room_member_ids(room_id, start=start)
 
@@ -157,6 +140,7 @@ class Service(Message, Func):
     """
         Action function
     """
+
     def leave_group(self, group_id):
         return self.client.leave_group(group_id)
 
@@ -166,6 +150,7 @@ class Service(Message, Func):
     """
         Get message status
     """
+
     def get_progress_status_narrowcast(self, request_id):
         return self.client.get_progress_status_narrowcast(request_id)
 
@@ -184,26 +169,19 @@ class Service(Message, Func):
     """
         Rich menu
     """
+
     def get_rich_menu(self, rich_menu_id):
         return self.client.get_rich_menu(rich_menu_id)
 
     def get_rich_menu_id_from_user(self, user_id):
         return self.client.get_rich_menu_id_of_user(user_id)
 
-    def create_rich_menu(self, rich_menu, file_name, file_format='jpeg'):
-        if file_format not in ['jpeg', 'png']:
-            raise DifferentTypeError(
-                'image file format is jpeg or png.'
-            )
+    def create_rich_menu(self, rich_menu, file_name, file_format="jpeg"):
+        if file_format not in ["jpeg", "png"]:
+            raise DifferentTypeError("image file format is jpeg or png.")
         rich_menu_id = self.client.create_rich_menu(rich_menu)
-        content = self.img_file_to_bytes(
-            file_name, format=file_format, rich=True
-        )
-        self.client.set_rich_menu_image(
-            rich_menu_id,
-            f'image/{file_format}',
-            content
-        )
+        content = self.img_file_to_bytes(file_name, format=file_format, rich=True)
+        self.client.set_rich_menu_image(rich_menu_id, f"image/{file_format}", content)
         return rich_menu_id
 
     def delete_rich_menu(self, rich_menu_id):
@@ -213,9 +191,7 @@ class Service(Message, Func):
         return self.client.link_rich_menu_to_user(user_id, rich_menu_id)
 
     def link_rich_menu_to_multi_user(self, user_id_list, rich_menu_id):
-        return self.client.link_rich_menu_to_users(
-            user_id_list, rich_menu_id
-        )
+        return self.client.link_rich_menu_to_users(user_id_list, rich_menu_id)
 
     def unlink_rich_menu_from_user(self, user_id):
         return self.client.unlink_rich_menu_from_user(user_id)
@@ -241,6 +217,7 @@ class Service(Message, Func):
     """
         Other
     """
+
     def get_message_quota(self):
         return self.client.get_message_quota()
 

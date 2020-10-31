@@ -2,6 +2,7 @@ import traceback
 
 from linebot.exceptions import InvalidSignatureError
 
+
 class Tracer:
 
     exec_event_list = {}
@@ -31,4 +32,3 @@ class Tracer:
 
     def add_event(self, event_type, func):
         self.exec_event_list[event_type] = func
-
