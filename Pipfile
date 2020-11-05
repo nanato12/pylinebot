@@ -7,10 +7,12 @@ verify_ssl = true
 mypy = "*"
 flake8 = "*"
 black = "*"
+flask = "*"
 
 [packages]
 python-dotenv = "*"
-selenium = "*"
+line-bot-sdk = "*"
+pillow = "*"
 
 [requires]
 python_version = "3"
