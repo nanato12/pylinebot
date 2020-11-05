@@ -12,22 +12,22 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot package."""
+"""pylinebot.types.exception module."""
 
-from .client import LINE
-from .api.tracer import Tracer
-from .structs.message import (
-    TextMessage,
-    StickerMessage,
-    ImageMessage,
-    VideoMessage,
-    AudioMessage,
-    LocationMessage,
-    FlexMessage,
-)
-from .types.event import (
-    HANDLER_EVENT as HANDLER_EVENT_TYPE,
-    TRACER_EVENT as TRACER_EVENT_TYPE,
-)
 
-from .types.message import MESSAGE as MESSAGE_TYPE
+class SetQuickReplyError(Exception):
+    """
+    set_quick_reply exception
+    """
+
+
+class MessageLimitError(Exception):
+    """
+    message limit exception
+    """
+
+
+class DifferentTypeError(Exception):
+    """
+    file type different exception
+    """
