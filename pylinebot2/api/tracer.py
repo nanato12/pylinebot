@@ -12,7 +12,7 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot.tracer module."""
+"""pylinebot.api.tracer module."""
 
 import traceback
 from typing import List, Callable
@@ -20,8 +20,8 @@ from typing import List, Callable
 from linebot.models.events import MessageEvent
 from linebot.exceptions import InvalidSignatureError
 
-from .client import LINE
-from .types import TRACER_EVENT
+from ..client import LINE
+from ..types.event import TRACER_EVENT
 
 
 class Tracer:

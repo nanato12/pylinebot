@@ -12,22 +12,20 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot package."""
+"""pylinebot.utils.decorator module."""
 
-from .client import LINE
-from .api.tracer import Tracer
-from .structs.message import (
-    TextMessage,
-    StickerMessage,
-    ImageMessage,
-    VideoMessage,
-    AudioMessage,
-    LocationMessage,
-    FlexMessage,
-)
-from .types.event import (
-    HANDLER_EVENT as HANDLER_EVENT_TYPE,
-    TRACER_EVENT as TRACER_EVENT_TYPE,
-)
+from typing import Any, List, Callable
 
-from .types.message import MESSAGE as MESSAGE_TYPE
+from .annotation import SEND_MESSAGE
+from ..types.exception import MessageLimitError
+
+
+def check(func: Callable) -> Callable:
+    def message_count(*args: Any) -> None:
+        messages: List[SEND_MESSAGE] = args[-1]
+        if len(messages) > 5:
+            raise MessageLimitError("You can send up to 5 messages at once.")
+        else:
+            func(*args)
+
+    return message_count

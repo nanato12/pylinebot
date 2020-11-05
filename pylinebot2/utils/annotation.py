@@ -12,20 +12,26 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot.utils module."""
+"""pylinebot.utils.annotation module."""
 
-from io import BytesIO
+from typing import Union
 
-from PIL import Image
+from ..structs.message import (
+    TextMessage,
+    StickerMessage,
+    ImageMessage,
+    VideoMessage,
+    AudioMessage,
+    LocationMessage,
+    FlexMessage,
+)
 
-
-def img_file_to_bytes(
-    file_name: str, format: str = "jpeg", rich: bool = False
-) -> bytes:
-    img: Image = Image.open(file_name)
-    if rich:
-        img = img.resize((800, 350))
-    with BytesIO() as output:
-        img.save(output, format=format)
-        img_bytes: bytes = output.getvalue()
-    return img_bytes
+SEND_MESSAGE = Union[
+    TextMessage,
+    StickerMessage,
+    ImageMessage,
+    VideoMessage,
+    AudioMessage,
+    LocationMessage,
+    FlexMessage,
+]

@@ -12,22 +12,40 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot package."""
+"""pylinebot.types.message module."""
 
-from .client import LINE
-from .api.tracer import Tracer
-from .structs.message import (
+from linebot.models import (
     TextMessage,
     StickerMessage,
     ImageMessage,
     VideoMessage,
     AudioMessage,
+    FileMessage,
     LocationMessage,
-    FlexMessage,
-)
-from .types.event import (
-    HANDLER_EVENT as HANDLER_EVENT_TYPE,
-    TRACER_EVENT as TRACER_EVENT_TYPE,
 )
 
-from .types.message import MESSAGE as MESSAGE_TYPE
+
+class MESSAGE:
+    TEXT = TextMessage
+    STICKER = StickerMessage
+    IMAGE = ImageMessage
+    VIDEO = VideoMessage
+    AUDIO = AudioMessage
+    FILE = FileMessage
+    LOCATION = LocationMessage
+
+
+class ToType:
+    USER = "user"
+    GROUP = "group"
+    ROOM = "room"
+
+
+class ContentType:
+    TEXT = "text"
+    STICKER = "sticker"
+    IMAGE = "image"
+    VIDEO = "video"
+    AUDIO = "audio"
+    FILE = "file"
+    LOCATION = "location"

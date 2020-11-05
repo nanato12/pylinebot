@@ -12,9 +12,9 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot.structs module."""
+"""pylinebot.structs.message module."""
 
-from typing import Optional, Any, Dict
+from typing import Any, Dict, Optional
 from dataclasses import dataclass
 
 from linebot.models import (
@@ -27,7 +27,6 @@ from linebot.models import (
     FlexSendMessage,
     QuickReply,
     Sender,
-    RichMenu,
 )
 
 
@@ -198,7 +197,3 @@ class FlexMessage:
             quick_reply=quick_reply,
             sender=sender,
         )
-
-
-class RichMenu(RichMenu):
-    pass

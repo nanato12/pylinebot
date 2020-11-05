@@ -12,7 +12,7 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot.exception module."""
+"""pylinebot.types.exception module."""
 
 
 class SetQuickReplyError(Exception):

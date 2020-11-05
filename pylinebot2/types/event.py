@@ -12,7 +12,7 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot.types module."""
+"""pylinebot.types.event module."""
 
 from linebot.models import (
     MessageEvent,
@@ -26,13 +26,6 @@ from linebot.models import (
     MemberLeftEvent,
     PostbackEvent,
     ThingsEvent,
-    TextMessage,
-    StickerMessage,
-    ImageMessage,
-    VideoMessage,
-    AudioMessage,
-    FileMessage,
-    LocationMessage,
 )
 
 
@@ -62,13 +55,3 @@ class TRACER_EVENT:
     POSTBACK = "postback"
     THINGS = "things"
     MESSAGE = "message"
-
-
-class MESSAGE:
-    TEXT = TextMessage
-    STICKER = StickerMessage
-    IMAGE = ImageMessage
-    VIDEO = VideoMessage
-    AUDIO = AudioMessage
-    FILE = FileMessage
-    LOCATION = LocationMessage

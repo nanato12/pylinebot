@@ -16,7 +16,7 @@
 
 from linebot import WebhookParser, WebhookHandler
 
-from .service import Service
+from .api.service import Service
 
 
 class LINE(Service):
