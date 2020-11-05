@@ -4,8 +4,8 @@ from linebot import LineBotApi, WebhookParser
 # local
 from .service import Service
 
-class LINE(Service):
 
+class LINE(Service):
     def __init__(self, channel_access_token, channel_secret):
         self.client = LineBotApi(channel_access_token)
         self.parser = WebhookParser(channel_secret)

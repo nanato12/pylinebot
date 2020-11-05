@@ -2,6 +2,7 @@ import traceback
 
 from linebot.exceptions import InvalidSignatureError
 
+
 class Tracer:
 
     exec_event_list = {}
@@ -23,12 +24,8 @@ class Tracer:
 
     def __execute(self, event):
         if event.type in self.exec_event_list:
-            try:
-                self.client.set_reply_token(event.reply_token)
-                self.exec_event_list[event.type](self.client, event)
-            except:
-                traceback.print_exc()
+            self.client.set_reply_token(event.reply_token)
+            self.exec_event_list[event.type](self.client, event)
 
     def add_event(self, event_type, func):
         self.exec_event_list[event_type] = func
-
