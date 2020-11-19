@@ -17,13 +17,13 @@
 from typing import Union
 
 from ..structs.message import (
-    TextMessage,
-    StickerMessage,
-    ImageMessage,
-    VideoMessage,
     AudioMessage,
-    LocationMessage,
     FlexMessage,
+    ImageMessage,
+    LocationMessage,
+    StickerMessage,
+    TextMessage,
+    VideoMessage,
 )
 
 SEND_MESSAGE = Union[

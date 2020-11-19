@@ -15,17 +15,17 @@
 """pylinebot.types.event module."""
 
 from linebot.models import (
-    MessageEvent,
     AccountLinkEvent,
     BeaconEvent,
     FollowEvent,
     JoinEvent,
-    UnfollowEvent,
     LeaveEvent,
     MemberJoinedEvent,
     MemberLeftEvent,
+    MessageEvent,
     PostbackEvent,
     ThingsEvent,
+    UnfollowEvent,
 )
 
 

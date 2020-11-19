@@ -15,13 +15,13 @@
 """pylinebot.types.message module."""
 
 from linebot.models import (
-    TextMessage,
-    StickerMessage,
-    ImageMessage,
-    VideoMessage,
     AudioMessage,
     FileMessage,
+    ImageMessage,
     LocationMessage,
+    StickerMessage,
+    TextMessage,
+    VideoMessage,
 )
 
 

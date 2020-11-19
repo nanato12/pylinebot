@@ -14,19 +14,19 @@
 
 """pylinebot.structs.message module."""
 
-from typing import Any, Dict, Optional
 from dataclasses import dataclass
+from typing import Any, Dict, Optional
 
 from linebot.models import (
-    TextSendMessage,
-    ImageSendMessage,
-    VideoSendMessage,
     AudioSendMessage,
-    LocationSendMessage,
-    StickerSendMessage,
     FlexSendMessage,
+    ImageSendMessage,
+    LocationSendMessage,
     QuickReply,
     Sender,
+    StickerSendMessage,
+    TextSendMessage,
+    VideoSendMessage,
 )
 
 

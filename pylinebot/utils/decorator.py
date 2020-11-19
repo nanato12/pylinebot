@@ -14,10 +14,10 @@
 
 """pylinebot.utils.decorator module."""
 
-from typing import Any, List, Callable
+from typing import Any, Callable, List
 
-from .annotation import SEND_MESSAGE
 from ..types.exception import MessageLimitError
+from .annotation import SEND_MESSAGE
 
 
 def check(func: Callable) -> Callable:

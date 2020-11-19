@@ -14,7 +14,7 @@
 
 """pylinebot.client module."""
 
-from linebot import WebhookParser, WebhookHandler
+from linebot import WebhookHandler, WebhookParser
 
 from .api.service import Service
 
