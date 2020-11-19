@@ -1,13 +1,11 @@
 import os
-import json
-from dotenv import load_dotenv
 from typing import Any
 
-from flask import Flask, request, abort
-from pylinebot import LINE, Tracer, HANDLER_EVENT_TYPE, TRACER_EVENT_TYPE, MESSAGE_TYPE
-from linebot.exceptions import InvalidSignatureError
+from dotenv import load_dotenv
+from flask import Flask, request
 
 from op import receive_message
+from pylinebot import LINE, TRACER_EVENT_TYPE, Tracer
 
 load_dotenv(verbose=True)
 load_dotenv(".env")
@@ -22,19 +20,23 @@ bot = LINE(channel_access_token=CHANNEL_ACCESS_TOKEN, channel_secret=CHANNEL_SEC
 tracer = Tracer(bot, debug=True)
 tracer.add_event(TRACER_EVENT_TYPE.MESSAGE, receive_message)
 
-handler = bot.handler
-
-
-@handler.add(HANDLER_EVENT_TYPE.MESSAGE, message=MESSAGE_TYPE.TEXT)
-def test(event: Any) -> None:
-    print(event)
-
 
 @app.route("/", methods=["POST"])
 def hello() -> Any:
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
     tracer.trace(body, signature)
+    return "OK"
+
+
+@app.route("/twitter", methods=["POST"])
+def twitter() -> Any:
+    print("\n\nget_data\n")
+    print(request.get_data())
+    print("\n\njson\n")
+    print(request.get_json())
+    print("\n\njson\n")
+    print(request.json)
     return "OK"
 
 
