@@ -1,8 +1,18 @@
 import json
 from typing import Any, List
 
-from pylinebot import LINE, ImageMessage, TextMessage
+from pylinebot import LINE
+from pylinebot.structs.message import (
+    AudioMessage,
+    FlexMessage,
+    ImageMessage,
+    LocationMessage,
+    StickerMessage,
+    TextMessage,
+    VideoMessage,
+)
 from pylinebot.types.message import ContentType, ToType
+from pylinebot.utils.annotation import SEND_MESSAGE
 
 
 def file_to_dict(file_name: str) -> dict:
@@ -24,8 +34,6 @@ def get_quick(quick_title: str) -> List[Any]:
 
 
 def receive_message(bot: LINE, event: Any) -> None:
-    reply_token = event.reply_token
-
     message = event.message
     message_id = message.id
     message_type = message.type
@@ -73,7 +81,7 @@ def receive_message(bot: LINE, event: Any) -> None:
 
         elif message_text == "がぞう":
             url = "https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png"
-            message = ImageMessage(url, url)
+            message = ImageMessage(preview_url=url, content_url=url)
             bot.reply_message([message])
 
         elif message_text == "ふくすうがぞう":
@@ -84,98 +92,94 @@ def receive_message(bot: LINE, event: Any) -> None:
             )
 
         elif message_text == "どうが":
-            video_data = {
-                "content_url": "https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
-                "preview_url": "https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
-            }
-            bot.reply_video_message(video_data)
+            video_message = VideoMessage(
+                content_url="https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
+                preview_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
+            )
+            bot.reply_message([video_message])
 
         elif message_text == "ふくすうどうが":
-            video_data = {
-                "content_url": "https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
-                "preview_url": "https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
-            }
-            bot.reply_video_message(video_data, video_data, video_data)
+            video_message = VideoMessage(
+                content_url="https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
+                preview_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
+            )
+            bot.reply_message([video_message, video_message, video_message])
 
         elif message_text == "おんせい":
-            audio_data = {
-                "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
-                "duration": 1000,
-            }
-            bot.reply_audio_message(audio_data)
+            audio_message = AudioMessage(
+                content_url="https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
+                duration=1000,
+            )
+            bot.reply_message([audio_message])
 
         elif message_text == "ふくすうおんせい":
-            audio_data = {
-                "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
-                "duration": 1000,
-            }
-            bot.reply_audio_message(audio_data, audio_data, audio_data, audio_data)
+            audio_message = AudioMessage(
+                content_url="https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
+                duration=1000,
+            )
+            bot.reply_message([audio_message, audio_message])
 
         elif message_text == "いち":
-            location_data = {
-                "title": "たいとる",
-                "address": "あどれす",
-                "latitude": 0,
-                "longitude": 0,
-            }
-            bot.reply_location_message(location_data)
+            location_message = LocationMessage(
+                title="たいとる",
+                address="あどれす",
+                latitude=0,
+                longitude=0,
+            )
+            bot.reply_message([location_message])
 
         elif message_text == "ふくすういち":
-            location_data = {
-                "title": "たいとる",
-                "address": "あどれす",
-                "latitude": 0,
-                "longitude": 0,
-            }
-            bot.reply_location_message(location_data, location_data)
+            location_message = LocationMessage(
+                title="たいとる",
+                address="あどれす",
+                latitude=0,
+                longitude=0,
+            )
+            bot.reply_message(
+                [location_message, location_message, location_message, location_message]
+            )
 
         elif message_text == "すたんぷ":
-            sticker_data = {"package_id": 1, "sticker_id": 1}
-            bot.reply_sticker_message(sticker_data)
+            sticker_message = StickerMessage(package_id=1, sticker_id=1)
+            bot.reply_message([sticker_message])
 
         elif message_text == "ふくすうすたんぷ":
-            sticker_data = {"package_id": 1, "sticker_id": 1}
-            bot.reply_sticker_message(
-                sticker_data, sticker_data, sticker_data, sticker_data, sticker_data
-            )
+            sticker_message = StickerMessage(package_id=1, sticker_id=1)
+            bot.reply_message([sticker_message, sticker_message])
 
         elif message_text == "ふれっくす":
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
-            bot.reply_flex_message(flex_data)
+            flex_message = FlexMessage(
+                alt_text="Flex Message", content=get_flex("test")
+            )
+            bot.reply_message([flex_message])
 
         elif message_text == "ふくすうふれっくす":
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
-            bot.reply_flex_message(
-                flex_data, flex_data, flex_data, flex_data, flex_data
+            flex_message = FlexMessage(
+                alt_text="Flex Message", content=get_flex("test")
             )
+            bot.reply_message([flex_message, flex_message, flex_message])
 
         elif message_text == "いろんな":
-            video_data = {
-                "content_url": "https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
-                "preview_url": "https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
-            }
-            audio_data = {
-                "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
-                "duration": 1000,
-            }
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
-            message_list = [
-                bot.create_text_message("いろんなメッセージを送るよ！"),
-                bot.create_image_message(
-                    "https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png"
-                ),
-                bot.create_video_message(video_data),
-                bot.create_audio_message(audio_data),
-                bot.create_flex_message(flex_data),
-            ]
-            bot.reply_message(message_list)
-
-        elif message_text == "りっち":
-            rich_menu = bot.create_rich_menu_object(get_rich("test"))
-            rich_menu_id = bot.create_rich_menu(rich_menu, "test.png", "png")
-
-            bot.link_rich_menu_to_user(user_id, rich_menu_id)
-            bot.send_text_message(reply_token, rich_menu_id)
+            video_message = VideoMessage(
+                content_url="https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
+                preview_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
+            )
+            audio_message = AudioMessage(
+                content_url="https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
+                duration=1000,
+            )
+            image_message = ImageMessage(
+                preview_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
+                content_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
+            )
+            text_message = TextMessage("test")
+            # メッセージを詰める
+            messages: List[SEND_MESSAGE] = []
+            messages.append(video_message)
+            messages.append(audio_message)
+            messages.append(image_message)
+            messages.append(text_message)
+            bot.reply_message(messages)
 
         elif message_text == "いべんと":
             bot.reply_text_message(str(event))

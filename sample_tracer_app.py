@@ -4,7 +4,8 @@ from typing import Any
 from dotenv import load_dotenv
 from flask import Flask, request
 
-from pylinebot import LINE, TRACER_EVENT_TYPE, Tracer
+from pylinebot import LINE, Tracer
+from pylinebot.types.event import TRACER_EVENT
 from sample_op import receive_message
 
 load_dotenv(verbose=True)
@@ -18,7 +19,7 @@ app = Flask(__name__)
 bot = LINE(channel_access_token=CHANNEL_ACCESS_TOKEN, channel_secret=CHANNEL_SECRET)
 
 tracer = Tracer(bot, debug=True)
-tracer.add_event(TRACER_EVENT_TYPE.MESSAGE, receive_message)
+tracer.add_event(TRACER_EVENT.MESSAGE, receive_message)
 
 
 @app.route("/", methods=["POST"])
