@@ -2,6 +2,7 @@ import json
 from typing import Any, List
 
 from pylinebot import LINE, ImageMessage, TextMessage
+from pylinebot.types.message import ContentType, ToType
 
 
 def file_to_dict(file_name: str) -> dict:
@@ -32,31 +33,31 @@ def receive_message(bot: LINE, event: Any) -> None:
     source_type = event.source.type
     user_id = event.source.user_id
 
-    if message_type == "sticker":
+    if message_type == ContentType.STICKER:
         bot.reply_message([TextMessage("a")])
 
-    elif message_type == "image":
+    elif message_type == ContentType.IMAGE:
         bot.save_content_from_message_id(message_id)
         bot.reply_text_message("その画像", "保存したよ。")
 
-    elif message_type == "video":
+    elif message_type == ContentType.VIDEO:
         bot.save_content_from_message_id(message_id, f"{message_id}.mp4")
         bot.reply_text_message("その動画", "保存", "したよ")
 
-    elif message_type == "location":
+    elif message_type == ContentType.LOCATION:
         bot.reply_text_message("それいち")
 
-    elif message_type == "file":
+    elif message_type == ContentType.FILE:
         bot.reply_text_message("それふぁいる")
 
-    elif message_type == "text":
+    elif message_type == ContentType.TEXT:
         message_text = message.text
 
-        if source_type == "group":
+        if source_type == ToType.GROUP:
             pass
             # group_id = event.source.group_id
             # print(bot.get_group_member_ids(group_id))
-        elif source_type == "room":
+        elif source_type == ToType.ROOM:
             pass
             # room_id = event.source.room_id
             # print(bot.get_room_member_ids(room_id))

@@ -29,16 +29,5 @@ def hello() -> Any:
     return "OK"
 
 
-@app.route("/twitter", methods=["POST"])
-def twitter() -> Any:
-    print("\n\nget_data\n")
-    print(request.get_data())
-    print("\n\njson\n")
-    print(request.get_json())
-    print("\n\njson\n")
-    print(request.json)
-    return "OK"
-
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000, debug=True)
