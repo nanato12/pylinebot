@@ -79,6 +79,9 @@ class Service(LineBotApi):
 
     @check
     def reply_message(self, messages: List[SEND_MESSAGE]) -> None:
+        """
+        LineBotApi reply_messageのオーバーライド
+        """
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
@@ -87,6 +90,9 @@ class Service(LineBotApi):
 
     @check
     def push_message(self, to: str, messages: List[SEND_MESSAGE]) -> None:
+        """
+        LineBotApi push_messageのオーバーライド
+        """
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
@@ -95,6 +101,9 @@ class Service(LineBotApi):
 
     @check
     def broadcast(self, messages: List[SEND_MESSAGE]) -> BroadcastResponse:
+        """
+        LineBotApi broadcastのオーバーライド
+        """
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
@@ -103,6 +112,9 @@ class Service(LineBotApi):
 
     @check
     def narrowcast(self, messages: List[SEND_MESSAGE]) -> NarrowcastResponse:
+        """
+        LineBotApi narrowcastのオーバーライド
+        """
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
@@ -111,6 +123,9 @@ class Service(LineBotApi):
 
     @check
     def multicast(self, to: List[str], messages: List[SEND_MESSAGE]) -> None:
+        """
+        LineBotApi multicastのオーバーライド
+        """
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
@@ -118,11 +133,19 @@ class Service(LineBotApi):
         super().multicast(to, messages)
 
     def reply_text_message(self, *args: str) -> None:
+        """
+        簡易的にテキストメッセージが送れる関数
+        例: reply_text_message("a", "i", "u")
+        """
         text: str
         messages: List[TextMessage] = [TextMessage(text) for text in args]
         self.reply_message(messages)
 
     def reply_image_message(self, *args: str) -> None:
+        """
+        簡易的に画像メッセージが送れる関数
+        例: reply_image_message("https://xxxx.png", "https://yyyy.png", "https://zzzz.png")
+        """
         image_url: str
         messages: List[ImageMessage] = [
             ImageMessage(content_url=image_url, preview_url=image_url)
