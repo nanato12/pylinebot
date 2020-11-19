@@ -1,22 +1,26 @@
 import json
+from typing import Any
+
 from io import BytesIO
 from PIL import Image
 
-def file_to_dict(file_name):
+from pylinebot import TextMessage, ImageMessage, LINE
+
+def file_to_dict(file_name:str) -> dict:
     with open(file_name) as json_file:
         data = json.load(json_file)
     return data
 
-def get_flex(flex_title):
+def get_flex(flex_title:str)->dict:
     return file_to_dict('flex.json')[flex_title]
 
-def get_rich(rich_title):
+def get_rich(rich_title:str)->dict:
     return file_to_dict('rich.json')[rich_title]
 
-def get_quick(quick_title):
+def get_quick(quick_title:str)->dict:
     return file_to_dict('quick.json')[quick_title]
 
-def receive_message(bot, event):
+def receive_message(bot:LINE, event:Any)->None:
     reply_token = event.reply_token
 
     message = event.message
@@ -26,10 +30,8 @@ def receive_message(bot, event):
     source_type = event.source.type
     user_id = event.source.user_id
 
-    bot.quick_reply = None
-
     if message_type == 'sticker':
-        bot.reply_text_message('それすたんぷ')
+        bot.reply_message([TextMessage('a')])
 
     elif message_type == 'image':
         bot.save_content_from_message_id(message_id)
@@ -58,13 +60,18 @@ def receive_message(bot, event):
             # print(bot.get_room_member_ids(room_id))
 
         if message_text == 'てきすと':
+            bot.set_quick_reply(get_quick('test'))
             bot.reply_text_message('テキスト')
+            bot.push_message(user_id, [TextMessage('a')])
+            bot.broadcast([TextMessage('ぶろーど')])
 
         elif message_text == 'ふくすうてきすと':
             bot.reply_text_message('ふ', 'く', 'す', 'う')
 
         elif message_text == 'がぞう':
-            bot.reply_image_message('https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png')
+            url = 'https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png'
+            message = ImageMessage(url, url)
+            bot.reply_message([message])
 
         elif message_text == 'ふくすうがぞう':
             bot.reply_image_message(
