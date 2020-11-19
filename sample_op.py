@@ -109,8 +109,7 @@ def receive_message(bot: LINE, event: Any) -> None:
                 "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
                 "duration": 1000,
             }
-            bot.reply_audio_message(
-                audio_data, audio_data, audio_data, audio_data)
+            bot.reply_audio_message(audio_data, audio_data, audio_data, audio_data)
 
         elif message_text == "いち":
             location_data = {
@@ -141,13 +140,11 @@ def receive_message(bot: LINE, event: Any) -> None:
             )
 
         elif message_text == "ふれっくす":
-            flex_data = {"content": get_flex(
-                "test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
             bot.reply_flex_message(flex_data)
 
         elif message_text == "ふくすうふれっくす":
-            flex_data = {"content": get_flex(
-                "test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
             bot.reply_flex_message(
                 flex_data, flex_data, flex_data, flex_data, flex_data
             )
@@ -161,8 +158,7 @@ def receive_message(bot: LINE, event: Any) -> None:
                 "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
                 "duration": 1000,
             }
-            flex_data = {"content": get_flex(
-                "test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
             message_list = [
                 bot.create_text_message("いろんなメッセージを送るよ！"),
                 bot.create_image_message(
