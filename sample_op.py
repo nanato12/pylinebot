@@ -11,6 +11,7 @@ from pylinebot.structs.message import (
     TextMessage,
     VideoMessage,
 )
+from pylinebot.types.event import Event
 from pylinebot.types.message import ContentType, ToType
 from pylinebot.utils.annotation import SEND_MESSAGE
 
@@ -33,7 +34,7 @@ def get_quick(quick_title: str) -> List[Any]:
     return file_to_dict("./resources/quick.json")[quick_title]
 
 
-def receive_message(bot: LINE, event: Any) -> None:
+def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
     message = event.message
     message_id = message.id
     message_type = message.type
