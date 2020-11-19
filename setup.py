@@ -11,7 +11,7 @@ setup(
     name='pylinebot',
     packages=['pylinebot'],
 
-    version='1.0.3',
+    version='2.0',
 
     license='Apache License 2.0',
 
@@ -36,5 +36,6 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 )
