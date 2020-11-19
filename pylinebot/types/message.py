@@ -25,7 +25,7 @@ from linebot.models import (
 )
 
 
-class MESSAGE:
+class MessageType:
     TEXT = TextMessage
     STICKER = StickerMessage
     IMAGE = ImageMessage
