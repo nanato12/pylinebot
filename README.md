@@ -185,9 +185,10 @@ bot.save_content_from_message_id(message_id, file_name)
 
 ### How to use
 ```python
+from pylinebot.types.event import Event
 from pylinebot.types.message import ContentType
 
-def receive_message(bot: LINE, event: Any) -> None:
+def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
     message = event.message
     message_type = message.type
 
