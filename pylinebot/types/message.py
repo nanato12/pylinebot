@@ -19,6 +19,7 @@ from linebot.models import (
     FileMessage,
     ImageMessage,
     LocationMessage,
+    Message,
     StickerMessage,
     TextMessage,
     VideoMessage,
