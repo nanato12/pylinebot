@@ -110,7 +110,7 @@ class Service(LineBotApi):
         return super().narrowcast(messages)
 
     @check
-    def multicast(self, to: str, messages: List[SEND_MESSAGE]) -> None:
+    def multicast(self, to: List[str], messages: List[SEND_MESSAGE]) -> None:
         message: Any
         messages = [
             message.create(self.quick_reply, self.sender) for message in messages
