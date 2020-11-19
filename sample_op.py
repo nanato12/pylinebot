@@ -12,15 +12,15 @@ def file_to_dict(file_name: str) -> dict:
 
 
 def get_flex(flex_title: str) -> dict:
-    return file_to_dict("flex.json")[flex_title]
+    return file_to_dict("./resources/flex.json")[flex_title]
 
 
 def get_rich(rich_title: str) -> dict:
-    return file_to_dict("rich.json")[rich_title]
+    return file_to_dict("./resources/rich.json")[rich_title]
 
 
 def get_quick(quick_title: str) -> List[Any]:
-    return file_to_dict("quick.json")[quick_title]
+    return file_to_dict("./resources/quick.json")[quick_title]
 
 
 def receive_message(bot: LINE, event: Any) -> None:
@@ -109,7 +109,8 @@ def receive_message(bot: LINE, event: Any) -> None:
                 "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
                 "duration": 1000,
             }
-            bot.reply_audio_message(audio_data, audio_data, audio_data, audio_data)
+            bot.reply_audio_message(
+                audio_data, audio_data, audio_data, audio_data)
 
         elif message_text == "いち":
             location_data = {
@@ -140,11 +141,13 @@ def receive_message(bot: LINE, event: Any) -> None:
             )
 
         elif message_text == "ふれっくす":
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex(
+                "test"), "alt_text": "Flex Message"}
             bot.reply_flex_message(flex_data)
 
         elif message_text == "ふくすうふれっくす":
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex(
+                "test"), "alt_text": "Flex Message"}
             bot.reply_flex_message(
                 flex_data, flex_data, flex_data, flex_data, flex_data
             )
@@ -158,7 +161,8 @@ def receive_message(bot: LINE, event: Any) -> None:
                 "content_url": "https://www.ne.jp/asahi/music/myuu/wave/springsonate.mp3",
                 "duration": 1000,
             }
-            flex_data = {"content": get_flex("test"), "alt_text": "Flex Message"}
+            flex_data = {"content": get_flex(
+                "test"), "alt_text": "Flex Message"}
             message_list = [
                 bot.create_text_message("いろんなメッセージを送るよ！"),
                 bot.create_image_message(
