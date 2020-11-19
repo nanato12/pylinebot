@@ -43,7 +43,7 @@ class Event:
     MESSAGE = MessageEvent
 
 
-class TRACER_EVENT:
+class TracerEvent:
     ACCOUNT_LINK = "accountLink"
     BEACON = "beacon"
     FOLLOW = "follow"
