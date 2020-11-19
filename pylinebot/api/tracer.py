@@ -15,13 +15,12 @@
 """pylinebot.api.tracer module."""
 
 import traceback
-from typing import List, Callable
+from typing import Callable, List
 
-from linebot.models.events import MessageEvent
 from linebot.exceptions import InvalidSignatureError
+from linebot.models.events import MessageEvent
 
 from ..client import LINE
-from ..types.event import TRACER_EVENT
 
 
 class Tracer:
@@ -52,5 +51,5 @@ class Tracer:
             self.client.set_reply_token(event.reply_token)
             self.exec_events[event.type](self.client, event)
 
-    def add_event(self, event_type: TRACER_EVENT, func: Callable) -> None:
+    def add_event(self, event_type: str, func: Callable) -> None:
         self.exec_events[event_type] = func
