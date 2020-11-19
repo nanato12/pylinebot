@@ -182,3 +182,16 @@ Save image, video, and audio data sent by users.
 ```python
 bot.save_content_from_message_id(message_id, file_name)
 ```
+
+### How to use
+```python
+from pylinebot.types.message import ContentType
+
+def receive_message(bot: LINE, event: Any) -> None:
+    message = event.message
+    message_type = message.type
+
+    if message_type == ContentType.IMAGE:
+        bot.save_content_from_message_id(message_id, f"{message_id}.jpg")
+        bot.reply_text_message("その画像", "保存したよ。")
+```
