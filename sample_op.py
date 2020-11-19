@@ -45,7 +45,7 @@ def receive_message(bot: LINE, event: Any) -> None:
         bot.reply_message([TextMessage("a")])
 
     elif message_type == ContentType.IMAGE:
-        bot.save_content_from_message_id(message_id)
+        bot.save_content_from_message_id(message_id, f"{message_id}.jpg")
         bot.reply_text_message("その画像", "保存したよ。")
 
     elif message_type == ContentType.VIDEO:
