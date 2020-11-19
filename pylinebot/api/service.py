@@ -18,7 +18,7 @@ from typing import Any, List, Optional
 
 from linebot import LineBotApi
 from linebot.models import QuickReply, QuickReplyButton, Sender
-from linebot.models.responses import BroadcastResponse, NarrowcastResponse
+from linebot.models.responses import BroadcastResponse, Content, NarrowcastResponse
 
 from ..structs.message import ImageMessage, TextMessage
 from ..types.exception import SetQuickReplyError
@@ -152,3 +152,11 @@ class Service(LineBotApi):
             for image_url in args
         ]
         self.reply_message(messages)
+
+    def save_content_from_message_id(self, message_id: str, file_name: str) -> None:
+        """
+        save content (image, video, auido) from message_id
+        """
+        message_content: Content = self.get_message_content(message_id)
+        with open(file_name, "wb") as content_file:
+            content_file.write(message_content.content)
