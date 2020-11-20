@@ -11,9 +11,9 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 setup(
     name="pylinebot",
     packages=["pylinebot"],
-    version="1.0.3",
+    version="2.0",
     license="Apache License 2.0",
-    install_requires=["line-bot-sdk", "pillow"],
+    install_requires=["line-bot-sdk"],
     author="nanato12",
     author_email="admin@nanato12.info",
     url="https://github.com/nanato12/pylinebot",
