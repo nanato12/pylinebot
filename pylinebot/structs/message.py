@@ -37,7 +37,7 @@ class TextMessage:
 
     def __init__(self, text: str) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str text: character to send (送信する文字)
         """
         self.text = text
 
@@ -55,7 +55,8 @@ class StickerMessage:
 
     def __init__(self, package_id: int, sticker_id: int) -> None:
         """
-        インテリセンスで表示されないため。
+        :param int package_id: sticker package id (パッケージID)
+        :param int sticker_id: sticker id (スタンプID)
         """
         self.package_id = package_id
         self.sticker_id = sticker_id
@@ -79,7 +80,8 @@ class ImageMessage:
 
     def __init__(self, content_url: str, preview_url: str) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str content_url: image content url (コンテンツURL)
+        :param str preview_url: image preview url (サムネイルURL)
         """
         self.content_url = content_url
         self.preview_url = preview_url
@@ -103,7 +105,8 @@ class VideoMessage:
 
     def __init__(self, content_url: str, preview_url: str) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str content_url: video content url (コンテンツURL)
+        :param str preview_url: video preview url (サムネイルURL)
         """
         self.content_url = content_url
         self.preview_url = preview_url
@@ -127,7 +130,8 @@ class AudioMessage:
 
     def __init__(self, content_url: str, duration: int) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str content_url: audio content url (コンテンツURL)
+        :param int duration: audio time (音声の長さ)
         """
         self.content_url = content_url
         self.duration = duration
@@ -155,7 +159,10 @@ class LocationMessage:
         self, title: str, address: str, latitude: float, longitude: float
     ) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str title: location title (位置情報の名前)
+        :param str address: location address (位置情報の住所)
+        :param float latitude: location latitude (位置情報の緯度)
+        :param float longitude: location longitude (位置情報の軽度)
         """
         self.title = title
         self.address = address
@@ -183,7 +190,8 @@ class FlexMessage:
 
     def __init__(self, alt_text: str, content: Dict[str, Any]) -> None:
         """
-        インテリセンスで表示されないため。
+        :param str alt_text: flex alt text (altテキスト)
+        :param Dict[str, Any content: flex content (flexの内容)
         """
         self.alt_text = alt_text
         self.content = content
