@@ -53,6 +53,10 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
         bot.save_content_from_message_id(message_id, f"{message_id}.mp4")
         bot.reply_text_message("その動画", "保存", "したよ")
 
+    elif message_type == ContentType.AUDIO:
+        bot.save_content_from_message_id(message_id, f"{message_id}.mp3")
+        bot.reply_text_message("その音声", "保存", "したよ")
+
     elif message_type == ContentType.LOCATION:
         bot.reply_text_message("それいち")
 
