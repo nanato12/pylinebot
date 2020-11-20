@@ -12,7 +12,16 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot package."""
+"""pylinebot.types.exception module."""
 
-from .api.tracer import Tracer
-from .client import LINE
+
+class SetQuickReplyError(Exception):
+    """
+    set_quick_reply exception
+    """
+
+
+class MessageLimitError(Exception):
+    """
+    message limit exception
+    """

@@ -12,7 +12,26 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-"""pylinebot package."""
+"""pylinebot.utils.annotation module."""
 
-from .api.tracer import Tracer
-from .client import LINE
+from typing import Union
+
+from ..structs.message import (
+    AudioMessage,
+    FlexMessage,
+    ImageMessage,
+    LocationMessage,
+    StickerMessage,
+    TextMessage,
+    VideoMessage,
+)
+
+SEND_MESSAGE = Union[
+    TextMessage,
+    StickerMessage,
+    ImageMessage,
+    VideoMessage,
+    AudioMessage,
+    LocationMessage,
+    FlexMessage,
+]
