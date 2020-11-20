@@ -29,7 +29,7 @@ from linebot.models import (
 )
 
 
-class HANDLER_EVENT:
+class Event:
     ACCOUNT_LINK = AccountLinkEvent
     BEACON = BeaconEvent
     FOLLOW = FollowEvent
@@ -43,7 +43,7 @@ class HANDLER_EVENT:
     MESSAGE = MessageEvent
 
 
-class TRACER_EVENT:
+class TracerEvent:
     ACCOUNT_LINK = "accountLink"
     BEACON = "beacon"
     FOLLOW = "follow"

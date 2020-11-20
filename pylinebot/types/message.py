@@ -19,13 +19,15 @@ from linebot.models import (
     FileMessage,
     ImageMessage,
     LocationMessage,
+    Message,
     StickerMessage,
     TextMessage,
     VideoMessage,
 )
 
 
-class MESSAGE:
+class MessageType:
+    BASE = Message
     TEXT = TextMessage
     STICKER = StickerMessage
     IMAGE = ImageMessage

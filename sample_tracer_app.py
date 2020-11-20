@@ -4,8 +4,9 @@ from typing import Any
 from dotenv import load_dotenv
 from flask import Flask, request
 
-from op import receive_message
-from pylinebot import LINE, TRACER_EVENT_TYPE, Tracer
+from pylinebot import LINE, Tracer
+from pylinebot.types.event import TracerEvent
+from sample_op import receive_message
 
 load_dotenv(verbose=True)
 load_dotenv(".env")
@@ -18,7 +19,7 @@ app = Flask(__name__)
 bot = LINE(channel_access_token=CHANNEL_ACCESS_TOKEN, channel_secret=CHANNEL_SECRET)
 
 tracer = Tracer(bot, debug=True)
-tracer.add_event(TRACER_EVENT_TYPE.MESSAGE, receive_message)
+tracer.add_event(TracerEvent.MESSAGE, receive_message)
 
 
 @app.route("/", methods=["POST"])
@@ -26,17 +27,6 @@ def hello() -> Any:
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
     tracer.trace(body, signature)
-    return "OK"
-
-
-@app.route("/twitter", methods=["POST"])
-def twitter() -> Any:
-    print("\n\nget_data\n")
-    print(request.get_data())
-    print("\n\njson\n")
-    print(request.get_json())
-    print("\n\njson\n")
-    print(request.json)
     return "OK"
 
 

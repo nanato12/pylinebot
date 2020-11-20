@@ -50,10 +50,10 @@ class TextMessage:
 @dataclass
 class StickerMessage:
 
-    package_id: str
-    sticker_id: str
+    package_id: int
+    sticker_id: int
 
-    def __init__(self, package_id: str, sticker_id: str) -> None:
+    def __init__(self, package_id: int, sticker_id: int) -> None:
         """
         インテリセンスで表示されないため。
         """

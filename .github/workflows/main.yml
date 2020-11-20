@@ -1,4 +1,4 @@
-name: pycheck
+name: pychecker
 
 on: [push]
 
@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: GitHub Action for Python code check
-        uses: nanato12/pycheck@master
+        uses: nanato12/pychecker@master
         with:
           path: './'

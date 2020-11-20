@@ -25,9 +25,3 @@ class MessageLimitError(Exception):
     """
     message limit exception
     """
-
-
-class DifferentTypeError(Exception):
-    """
-    file type different exception
-    """
