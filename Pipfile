@@ -1,6 +1,6 @@
 [[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
+name = "pylinebot"
+url = "https://pypi.org/project/pylinebot/"
 verify_ssl = true
 
 [dev-packages]
@@ -9,10 +9,11 @@ mypy = "*"
 flake8 = "*"
 black = "*"
 flask = "*"
+wheel = "*"
+twine = "*"
 
 [packages]
 line-bot-sdk = "*"
-pillow = "*"
 
 [requires]
 python_version = "3"
