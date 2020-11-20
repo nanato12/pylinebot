@@ -191,7 +191,7 @@ class FlexMessage:
     def __init__(self, alt_text: str, content: Dict[str, Any]) -> None:
         """
         :param str alt_text: flex alt text (altテキスト)
-        :param Dict[str, Any content: flex content (flexの内容)
+        :param Dict[str, Any] content: flex content (flexの内容)
         """
         self.alt_text = alt_text
         self.content = content
