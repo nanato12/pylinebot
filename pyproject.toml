@@ -1,5 +1,5 @@
 [tool.black]
-line-length = 72
+line-length = 79
 
 [tool.isort]
 multi_line_output = 3
