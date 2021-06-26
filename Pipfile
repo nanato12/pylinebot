@@ -1,7 +1,7 @@
 [[source]]
-name = "pylinebot"
-url = "https://pypi.org/project/pylinebot/"
+url = "https://pypi.org/simple"
 verify_ssl = true
+name = "pypi"
 
 [dev-packages]
 python-dotenv = "*"
@@ -11,9 +11,13 @@ black = "*"
 flask = "*"
 wheel = "*"
 twine = "*"
+isort = "*"
 
 [packages]
 line-bot-sdk = "*"
 
 [requires]
 python_version = "3"
+
+[pipenv]
+allow_prereleases = true
