@@ -24,7 +24,9 @@ class LINE(Service):
     parser: WebhookParser
     handler: WebhookHandler
 
-    def __init__(self, channel_access_token: str, channel_secret: str) -> None:
+    def __init__(
+        self, channel_access_token: str, channel_secret: str
+    ) -> None:
         Service.__init__(self, channel_access_token)
         self.parser = WebhookParser(channel_secret)
         self.handler = WebhookHandler(channel_secret)

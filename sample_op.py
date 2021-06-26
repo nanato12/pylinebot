@@ -46,15 +46,21 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
         bot.reply_message([TextMessage("a")])
 
     elif message_type == ContentType.IMAGE:
-        bot.save_content_from_message_id(message_id, f"{message_id}.jpg")
+        bot.save_content_from_message_id(
+            message_id, f"{message_id}.jpg"
+        )
         bot.reply_text_message("その画像", "保存したよ。")
 
     elif message_type == ContentType.VIDEO:
-        bot.save_content_from_message_id(message_id, f"{message_id}.mp4")
+        bot.save_content_from_message_id(
+            message_id, f"{message_id}.mp4"
+        )
         bot.reply_text_message("その動画", "保存", "したよ")
 
     elif message_type == ContentType.AUDIO:
-        bot.save_content_from_message_id(message_id, f"{message_id}.mp3")
+        bot.save_content_from_message_id(
+            message_id, f"{message_id}.mp3"
+        )
         bot.reply_text_message("その音声", "保存", "したよ")
 
     elif message_type == ContentType.LOCATION:
@@ -108,7 +114,9 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
                 content_url="https://file3-d.kuku.lu/files/20200514-0225_b5468a4effd6228a4c454c6b0d477f08.mp4",
                 preview_url="https://linebot.m3e.xyz/public_self_bot/img/dev_img_nanato12.png",
             )
-            bot.reply_message([video_message, video_message, video_message])
+            bot.reply_message(
+                [video_message, video_message, video_message]
+            )
 
         elif message_text == "おんせい":
             audio_message = AudioMessage(
@@ -141,7 +149,12 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
                 longitude=0,
             )
             bot.reply_message(
-                [location_message, location_message, location_message, location_message]
+                [
+                    location_message,
+                    location_message,
+                    location_message,
+                    location_message,
+                ]
             )
 
         elif message_text == "すたんぷ":
@@ -162,7 +175,9 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
             flex_message = FlexMessage(
                 alt_text="Flex Message", content=get_flex("test")
             )
-            bot.reply_message([flex_message, flex_message, flex_message])
+            bot.reply_message(
+                [flex_message, flex_message, flex_message]
+            )
 
         elif message_text == "いろんな":
             video_message = VideoMessage(

@@ -18,7 +18,11 @@ from typing import Any, List, Optional
 
 from linebot import LineBotApi
 from linebot.models import QuickReply, QuickReplyButton, Sender
-from linebot.models.responses import BroadcastResponse, Content, NarrowcastResponse
+from linebot.models.responses import (
+    BroadcastResponse,
+    Content,
+    NarrowcastResponse,
+)
 
 from ..structs.message import ImageMessage, TextMessage
 from ..types.exception import SetQuickReplyError
@@ -63,14 +67,18 @@ class Service(LineBotApi):
         """
         self.sender = Sender(name=name, icon_url=icon_url)
 
-    def set_quick_reply(self, action_list: list, img_url_list: list = []) -> None:
+    def set_quick_reply(
+        self, action_list: list, img_url_list: list = []
+    ) -> None:
         """
         QuickReplyがつく。
         """
         if not img_url_list:
             img_url_list = [None] * len(action_list)
         elif len(action_list) != len(img_url_list):
-            raise SetQuickReplyError("action and img_url list length is different.")
+            raise SetQuickReplyError(
+                "action and img_url list length is different."
+            )
         item_list: List[QuickReplyButton] = [
             QuickReplyButton(image_url=img_url, action=action)
             for action, img_url in zip(action_list, img_url_list)
@@ -84,51 +92,66 @@ class Service(LineBotApi):
         """
         message: Any
         messages = [
-            message.create(self.quick_reply, self.sender) for message in messages
+            message.create(self.quick_reply, self.sender)
+            for message in messages
         ]
-        super().reply_message(reply_token=self.reply_token, messages=messages)
+        super().reply_message(
+            reply_token=self.reply_token, messages=messages
+        )
 
     @check
-    def push_message(self, to: str, messages: List[SEND_MESSAGE]) -> None:
+    def push_message(
+        self, to: str, messages: List[SEND_MESSAGE]
+    ) -> None:
         """
         LineBotApi push_messageのオーバーライド
         """
         message: Any
         messages = [
-            message.create(self.quick_reply, self.sender) for message in messages
+            message.create(self.quick_reply, self.sender)
+            for message in messages
         ]
         super().push_message(to, messages=messages)
 
     @check
-    def broadcast(self, messages: List[SEND_MESSAGE]) -> BroadcastResponse:
+    def broadcast(
+        self, messages: List[SEND_MESSAGE]
+    ) -> BroadcastResponse:
         """
         LineBotApi broadcastのオーバーライド
         """
         message: Any
         messages = [
-            message.create(self.quick_reply, self.sender) for message in messages
+            message.create(self.quick_reply, self.sender)
+            for message in messages
         ]
         return super().broadcast(messages)
 
     @check
-    def narrowcast(self, messages: List[SEND_MESSAGE]) -> NarrowcastResponse:
+    def narrowcast(
+        self, messages: List[SEND_MESSAGE]
+    ) -> NarrowcastResponse:
         """
         LineBotApi narrowcastのオーバーライド
         """
         message: Any
         messages = [
-            message.create(self.quick_reply, self.sender) for message in messages
+            message.create(self.quick_reply, self.sender)
+            for message in messages
         ]
         return super().narrowcast(messages)
 
     @check
-    def multicast(self, to: List[str], messages: List[SEND_MESSAGE]) -> None:
+    def multicast(
+        self, to: List[str], messages: List[SEND_MESSAGE]
+    ) -> None:
         """
         LineBotApi multicastのオーバーライド
         """
         message: Any
         messages = [
-            message.create(self.quick_reply, self.sender) for message in messages
+            message.create(self.quick_reply, self.sender)
+            for message in messages
         ]
         super().multicast(to, messages)
 
@@ -138,7 +161,9 @@ class Service(LineBotApi):
         例: reply_text_message("a", "i", "u")
         """
         text: str
-        messages: List[TextMessage] = [TextMessage(text) for text in args]
+        messages: List[TextMessage] = [
+            TextMessage(text) for text in args
+        ]
         self.reply_message(messages)
 
     def reply_image_message(self, *args: str) -> None:
@@ -153,7 +178,9 @@ class Service(LineBotApi):
         ]
         self.reply_message(messages)
 
-    def save_content_from_message_id(self, message_id: str, file_name: str) -> None:
+    def save_content_from_message_id(
+        self, message_id: str, file_name: str
+    ) -> None:
         """
         save content (image, video, auido) from message_id
         """
