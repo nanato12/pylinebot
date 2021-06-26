@@ -95,14 +95,10 @@ class Service(LineBotApi):
             message.create(self.quick_reply, self.sender)
             for message in messages
         ]
-        super().reply_message(
-            reply_token=self.reply_token, messages=messages
-        )
+        super().reply_message(reply_token=self.reply_token, messages=messages)
 
     @check
-    def push_message(
-        self, to: str, messages: List[SEND_MESSAGE]
-    ) -> None:
+    def push_message(self, to: str, messages: List[SEND_MESSAGE]) -> None:
         """
         LineBotApi push_messageのオーバーライド
         """
@@ -114,9 +110,7 @@ class Service(LineBotApi):
         super().push_message(to, messages=messages)
 
     @check
-    def broadcast(
-        self, messages: List[SEND_MESSAGE]
-    ) -> BroadcastResponse:
+    def broadcast(self, messages: List[SEND_MESSAGE]) -> BroadcastResponse:
         """
         LineBotApi broadcastのオーバーライド
         """
@@ -128,9 +122,7 @@ class Service(LineBotApi):
         return super().broadcast(messages)
 
     @check
-    def narrowcast(
-        self, messages: List[SEND_MESSAGE]
-    ) -> NarrowcastResponse:
+    def narrowcast(self, messages: List[SEND_MESSAGE]) -> NarrowcastResponse:
         """
         LineBotApi narrowcastのオーバーライド
         """
@@ -142,9 +134,7 @@ class Service(LineBotApi):
         return super().narrowcast(messages)
 
     @check
-    def multicast(
-        self, to: List[str], messages: List[SEND_MESSAGE]
-    ) -> None:
+    def multicast(self, to: List[str], messages: List[SEND_MESSAGE]) -> None:
         """
         LineBotApi multicastのオーバーライド
         """
@@ -161,9 +151,7 @@ class Service(LineBotApi):
         例: reply_text_message("a", "i", "u")
         """
         text: str
-        messages: List[TextMessage] = [
-            TextMessage(text) for text in args
-        ]
+        messages: List[TextMessage] = [TextMessage(text) for text in args]
         self.reply_message(messages)
 
     def reply_image_message(self, *args: str) -> None:

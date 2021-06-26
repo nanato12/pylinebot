@@ -24,9 +24,7 @@ def check(func: Callable) -> Callable:
     def message_count(*args: Any) -> None:
         messages: List[SEND_MESSAGE] = args[-1]
         if len(messages) > 5:
-            raise MessageLimitError(
-                "You can send up to 5 messages at once."
-            )
+            raise MessageLimitError("You can send up to 5 messages at once.")
         else:
             func(*args)
 
