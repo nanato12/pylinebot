@@ -16,7 +16,10 @@ CHANNEL_SECRET: str = os.environ["CHANNEL_SECRET"]
 
 app = Flask(__name__)
 
-bot = LINE(channel_access_token=CHANNEL_ACCESS_TOKEN, channel_secret=CHANNEL_SECRET)
+bot = LINE(
+    channel_access_token=CHANNEL_ACCESS_TOKEN,
+    channel_secret=CHANNEL_SECRET,
+)
 
 tracer = Tracer(bot, debug=True)
 tracer.add_event(TracerEvent.MESSAGE, receive_message)

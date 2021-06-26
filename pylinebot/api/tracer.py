@@ -35,7 +35,9 @@ class Tracer:
 
     def trace(self, body: str, signature: str) -> None:
         try:
-            events: List[MessageEvent] = self.client.parser.parse(body, signature)
+            events: List[MessageEvent] = self.client.parser.parse(
+                body, signature
+            )
         except InvalidSignatureError:
             traceback.print_exc()
 

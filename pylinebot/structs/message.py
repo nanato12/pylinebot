@@ -42,9 +42,13 @@ class TextMessage:
         self.text = text
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> TextSendMessage:
-        return TextSendMessage(text=self.text, quick_reply=quick_reply, sender=sender)
+        return TextSendMessage(
+            text=self.text, quick_reply=quick_reply, sender=sender
+        )
 
 
 @dataclass
@@ -62,7 +66,9 @@ class StickerMessage:
         self.sticker_id = sticker_id
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> StickerSendMessage:
         return StickerSendMessage(
             package_id=self.package_id,
@@ -87,7 +93,9 @@ class ImageMessage:
         self.preview_url = preview_url
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> ImageSendMessage:
         return ImageSendMessage(
             original_content_url=self.content_url,
@@ -112,7 +120,9 @@ class VideoMessage:
         self.preview_url = preview_url
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> VideoSendMessage:
         return VideoSendMessage(
             original_content_url=self.content_url,
@@ -137,7 +147,9 @@ class AudioMessage:
         self.duration = duration
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> AudioSendMessage:
         return AudioSendMessage(
             original_content_url=self.content_url,
@@ -156,7 +168,11 @@ class LocationMessage:
     longitude: float
 
     def __init__(
-        self, title: str, address: str, latitude: float, longitude: float
+        self,
+        title: str,
+        address: str,
+        latitude: float,
+        longitude: float,
     ) -> None:
         """
         :param str title: location title (位置情報の名前)
@@ -170,7 +186,9 @@ class LocationMessage:
         self.longitude = longitude
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> LocationSendMessage:
         return LocationSendMessage(
             title=self.title,
@@ -197,7 +215,9 @@ class FlexMessage:
         self.content = content
 
     def create(
-        self, quick_reply: Optional[QuickReply] = None, sender: Optional[Sender] = None
+        self,
+        quick_reply: Optional[QuickReply] = None,
+        sender: Optional[Sender] = None,
     ) -> FlexSendMessage:
         return FlexSendMessage(
             alt_text=self.alt_text,

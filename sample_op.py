@@ -141,7 +141,12 @@ def receive_message(bot: LINE, event: Event.MESSAGE) -> None:
                 longitude=0,
             )
             bot.reply_message(
-                [location_message, location_message, location_message, location_message]
+                [
+                    location_message,
+                    location_message,
+                    location_message,
+                    location_message,
+                ]
             )
 
         elif message_text == "すたんぷ":
