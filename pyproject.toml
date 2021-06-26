@@ -1,0 +1,11 @@
+[tool.black]
+line-length = 72
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+
+[tool.mypy]
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
